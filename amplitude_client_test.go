@@ -31,6 +31,7 @@ func TestClient_AmplitudeClient(t *testing.T) {
 
 	err := client.Flush()
 	c.NoError(err)
+	c.Len(client.events, 0)
 }
 
 func TestClient_AmplitudeClientError(t *testing.T) {
