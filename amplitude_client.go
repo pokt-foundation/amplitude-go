@@ -90,6 +90,8 @@ func (c *Client) Flush() error {
 		break
 	}
 
+	c.events = nil
+
 	return nil
 }
 
