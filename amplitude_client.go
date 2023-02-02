@@ -25,6 +25,8 @@ var (
 	ErrUploadingEvents = errors.New("error uploading events")
 	// ErrTooManyParts error when events need to be divided by more than their size
 	ErrTooManyParts = errors.New("error too many parts")
+	// ErrNoEvents error when there are no events to send
+	ErrNoEvents = errors.New("error no events")
 	// ErrUnmanagedPayloadTooLarge error when API throw too large in not the first request
 	ErrUnmanagedPayloadTooLarge = errors.New("unmmanaged payload too large")
 
@@ -73,6 +75,10 @@ func (c *Client) LogEvent(event *Event) error {
 
 // Flush uploads all logged events to Amplitude API
 func (c *Client) Flush() error {
+	if len(c.events) == 0 {
+		return ErrNoEvents
+	}
+
 	parts := 1
 
 	for {

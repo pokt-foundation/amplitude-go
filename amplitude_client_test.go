@@ -44,7 +44,10 @@ func TestClient_AmplitudeClientError(t *testing.T) {
 		Timeout: 2 * time.Minute,
 	})
 
-	err := client.LogEvent(&Event{})
+	err := client.Flush()
+	c.Equal(err, ErrNoEvents)
+
+	err = client.LogEvent(&Event{})
 	c.Equal(err, ErrInvalidEvent)
 
 	for i := 0; i < 3; i++ {
